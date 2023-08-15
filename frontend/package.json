@@ -17,7 +17,6 @@
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
-    "tesseract.js": "^4.1.1"
   },
   "devDependencies": {
     "electron-packager": "^17.1.1"

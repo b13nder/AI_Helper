@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Electron Screenshot App</title>
+  <style>
+    #response-container {
+      font-size: 14px;
+      font-family: "San Francisco", sans-serif;
+      margin-left: 1em;
+      margin-right: 1em;
+      max-width: 40;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="response-container"></div>
+  <!-- <button onclick="takeScreenshot()">Сделать скриншот рабочего стола</button> -->
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on('screenshotSaved', (event, message) => {
+      console.log(message);
+    });
+
+    ipcRenderer.on('receiveResponse', (event, response) => {
+      const responseText = document.getElementById('responseText');
+      responseText.textContent = response;
+    });
+
+    function takeScreenshot() {
+      ipcRenderer.send('takeScreenshot');
+    }
+
+    ipcRenderer.on("apiResponse", (event, responseData) => {
+      const responseContainer = document.getElementById("response-container");
+      const responseObj = JSON.parse(responseData);
+      responseContainer.textContent = responseObj.response;
+    });
+
+    function clearText() {
+      const inputText = document.getElementById('inputText');
+      inputText.value = '';
+    }
+  </script>
+
+</body>
+
+</html>
